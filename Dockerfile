@@ -96,4 +96,14 @@ RUN set -eux; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	composer dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
-	chmod +x bin/console; sync;
+	chmod +x bin/console; \
+	sync;
+
+	RUN set -eux; \
+		mkdir -p var/tailwind; \
+		php bin/console importmap:install; \
+		php bin/console typescript:build; \
+		php bin/console tailwind:build; \
+		php bin/console asset-map:compile; \
+		php bin/console c:c; \
+		sync;
