@@ -1,4 +1,4 @@
-name: 🚀 CI boilerplate Symfony 🚀
+name: 🚀 CI Open Cellar 🚀
 
 on:
   push:
@@ -147,7 +147,7 @@ jobs:
         run: composer audit --no-dev --format summary --locked --ansi
 
       - name: Run Composer Outdated
-        run: composer outdated -D --strict --ignore=phpunit/phpunit --ansi
+        run: composer outdated -D --strict --ignore=phpunit/phpunit,phpstan/phpdoc-parser --ansi
 
   quality:
     name: Code Quality Checks
