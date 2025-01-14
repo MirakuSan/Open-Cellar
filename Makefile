@@ -67,7 +67,7 @@ rebuild: compose.override.yaml
 up: ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-start: build up vendor db-create open ## Build and start the containers
+start: build up vendor db-create assets ## Build and start the containers
 
 kill:
 	@$(DOCKER_COMP) kill
@@ -127,6 +127,26 @@ db-update: ## Update the database schema
 	@$(SYMFONY) doctrine:migrations:update --force -nq
 
 db-reset: db-create db-update ## Reset the database
+
+##
+## —— ⚙️ Assets —————————————————————————————————————————————————————————————————————
+importmap-req: ## Add a new entry to the importmap.php file
+	@$(SYMFONY) importmap:require
+
+typescript-build: ## Build the Typescript application
+	@$(SYMFONY) typescript:build
+
+assets: typescript-build tailwind ## Install assets according to the current composer.lock file
+	@$(SYMFONY) asset-map:compile
+
+tailwind: ## Install tailwindcss
+	@$(SYMFONY) tailwind:build --ansi
+
+tailwind-watch: ## Watch tailwindcss
+	@$(SYMFONY) tailwind:build --watch --ansi
+
+tailwind-prod: ## Install tailwindcss in production
+	@$(SYMFONY) tailwind:build --minify --ansi
 
 ##
 ## —— ✨ Code Quality ——————————————————————————————————————————————————————————
