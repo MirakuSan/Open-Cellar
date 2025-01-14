@@ -2,27 +2,9 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Boilerplate Symfony project.
- *
- * Copyright (c) 2024-present MirakuSan
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
-
-$header = <<<'OEF'
-    This file is part of the Boilerplate Symfony project.
-
-    Copyright (c) 2024-present MirakuSan
-
-    For the full copyright and license information, please view the LICENSE
-    file that was distributed with this source code.
-    OEF;
 
 $rules = [
     '@PHP80Migration' => true,
@@ -34,7 +16,6 @@ $rules = [
     '@PhpCsFixer:risky' => true,
     '@Symfony' => true,
     '@Symfony:risky' => true,
-    'header_comment' => ['header' => $header],
     'array_syntax' => ['syntax' => 'short'],
     'class_definition' => ['multi_line_extends_each_single_line' => true],
     'ordered_class_elements' => true,

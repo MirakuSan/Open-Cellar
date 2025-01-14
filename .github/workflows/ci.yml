@@ -1,4 +1,4 @@
-name: 🚀 CI boilerplate Symfony 🚀
+name: 🚀 CI Open Cellar 🚀
 
 on:
   push:
@@ -147,7 +147,7 @@ jobs:
         run: composer audit --no-dev --format summary --locked --ansi
 
       - name: Run Composer Outdated
-        run: composer outdated -D --strict --ignore=phpunit/phpunit --ansi
+        run: composer outdated -D --strict --ignore=phpunit/phpunit --ignore=phpstan/phpdoc-parser --ansi
 
   quality:
     name: Code Quality Checks
@@ -185,6 +185,34 @@ jobs:
 
       - name: Run PhpArkitect
         run: vendor/bin/phparkitect check --config=phparkitect.php --ansi
+
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: security-check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --ansi
+
+      - name: Run PHPUnit
+        run: php bin/phpunit
 
   dependabot:
     name: Dependabot auto-merge

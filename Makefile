@@ -67,7 +67,7 @@ rebuild: compose.override.yaml
 up: ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-start: build up vendor open ## Build and start the containers
+start: build up vendor db-create open ## Build and start the containers
 
 kill:
 	@$(DOCKER_COMP) kill
@@ -121,6 +121,7 @@ cc: sf
 db-create: ## Create the database
 	@$(SYMFONY) doctrine:database:drop --force --if-exists -nq
 	@$(SYMFONY) doctrine:database:create -nq
+	@$(SYMFONY) doctrine:schema:create -nq
 
 db-update: ## Update the database schema
 	@$(SYMFONY) doctrine:migrations:update --force -nq
