@@ -23,8 +23,7 @@ RESET  := $(shell tput -Txterm sgr0)
 # Misc
 .DEFAULT_GOAL = help
 .PHONY        : help build rebuild up start kill down logs sh composer vendor sf cc test open ps db-create db-update db-reset
-.PHONY		  : php-cs-fixer php-cs-fixer-apply phpstan phpsalm phparkitect deptrac qa
-
+.PHONY		  : php-cs-fixer php-cs-fixer-apply phpstan phpsalm phparkitect deptrac qa watch add dev
 ## —— 🔥 Project ——
 .env.local: .env
 	@if [ -f .env.local ]; then \
@@ -67,7 +66,7 @@ rebuild: compose.override.yaml
 up: ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-start: build up vendor open ## Build and start the containers
+start: build up vendor db-create open watch ## Build and start the containers
 
 kill:
 	@$(DOCKER_COMP) kill
@@ -121,11 +120,24 @@ cc: sf
 db-create: ## Create the database
 	@$(SYMFONY) doctrine:database:drop --force --if-exists -nq
 	@$(SYMFONY) doctrine:database:create -nq
+	@$(SYMFONY) doctrine:schema:create -nq
 
 db-update: ## Update the database schema
 	@$(SYMFONY) doctrine:migrations:update --force -nq
 
 db-reset: db-create db-update ## Reset the database
+
+##
+## —— ⚙️ Assets —————————————————————————————————————————————————————————————————————
+watch: ## Watch the assets
+	@$(PHP_CONT) yarn watch
+
+dev: ## Build the assets
+	@$(PHP_CONT) yarn dev
+
+add: ## Add a package to the assets dependencies (pass the parameter "c=" to add a specific package)
+	@$(eval c ?=)
+	@$(PHP_CONT) yarn add $(c)
 
 ##
 ## —— ✨ Code Quality ——————————————————————————————————————————————————————————

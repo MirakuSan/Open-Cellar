@@ -6,14 +6,13 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
-        'router' => [
-            'utf8' => true,
-        ],
+        'validation' => [],
     ]);
-    if ('prod' === $containerConfigurator->env()) {
+
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('framework', [
-            'router' => [
-                'strict_requirements' => null,
+            'validation' => [
+                'not_compromised_password' => false,
             ],
         ]);
     }

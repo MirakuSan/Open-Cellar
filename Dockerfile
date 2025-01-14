@@ -22,8 +22,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	file \
 	gettext \
 	git \
-	yarn \
+	curl \
+	gnupg=2.* \
 	&& rm -rf /var/lib/apt/lists/*
+
+# Add Node.js and Yarn repositories
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	nodejs=22.* \
+	yarn=1.* \
+    && rm -rf /var/lib/apt/lists/* \
+	&& mkdir -p /app/public/build
 
 RUN set -eux; \
 	install-php-extensions \
