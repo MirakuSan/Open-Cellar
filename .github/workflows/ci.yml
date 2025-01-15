@@ -75,6 +75,9 @@ jobs:
 
       - name: Install dependencies
         run: make composer c='install --prefer-dist --no-progress'
+
+      - name: Install assets
+        run: make assets
         
       - name: Add localhost to /etc/hosts
         run: echo "127.0.0.1 localhost" | sudo tee -a /etc/hosts
@@ -86,16 +89,11 @@ jobs:
         run: curl -vk --fail-with-body https://localhost
 
       - name: Create test database
-        if: false # Remove this line if Doctrine ORM is installed
         run: make db-create
 
       - name: Run migrations
         if: false # Remove this line if Doctrine Migrations is installed
         run: make db-update
-
-      - name: Run PHPUnit
-        if: false # Remove this line if PHPUnit is installed
-        run: make test
 
       - name: Doctrine Schema Validator
         if: false # Remove this line if Doctrine ORM is installed
