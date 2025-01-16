@@ -31,7 +31,6 @@ An open-source, self-hosted Wine Cellar Management application with a mobile-fir
 - Mobile-first development approach required
 - Cross-platform compatibility needs
 - Self-hosting infrastructure requirements
-- Integration capabilities for temperature/humidity sensors
 - Image storage and management requirements
 - Database design for complex wine data relationships
 
@@ -57,13 +56,12 @@ An open-source, self-hosted Wine Cellar Management application with a mobile-fir
 ### List of user stories:
 1. Wine Inventory Management:
 - "As a collector, I want to add new wines to my cellar with detailed information"
-- "As a user, I want to track the quantity and location of each wine"
+- "As a user, I want to track the quantity of each wine"
 - "As a collector, I want to maintain professional and personal ratings"
 
 2. Cellar Organization:
-- "As a user, I want to visualize my cellar layout"
-- "As a collector, I want to manage multiple storage locations"
-- "As a user, I want to monitor storage conditions"
+- "As a collector, I want to manage multiple cellars"
+- "As a user, I want to monitor my wine collection"
 
 3. Collection Analytics:
 - "As a collector, I want to view my collection's total value"
@@ -78,6 +76,232 @@ An open-source, self-hosted Wine Cellar Management application with a mobile-fir
 # Specification Writing (User-Friendly Language)
 
 ## Technical Specifications:
+
+### Wine Color Specifications:
+```
+enum WineColor {
+    RED       = "#800020" // Deep burgundy
+    WHITE     = "#F9F3D3" // Off-white with golden hue
+    ROSE      = "#FFB7B2" // Delicate pink
+    CHAMPAGNE = "#F7E7CE" // Pearly beige-gold
+    SPARKLING = "#E8E4C9" // Pale sparkling yellow
+    FORTIFIED = "#6B2B24" // Dark red-brown
+    DESSERT   = "#FFB347" // Golden amber
+    ORANGE    = "#E67E22" // Amber orange
+}
+```
+
+### API Specifications (MVP):
+
+Base URL: /api/v1
+
+#### Entities:
+
+**Cellar Entity:**
+- id (uuid)
+- name (string)
+- description (string)
+- created_at (datetime)
+- updated_at (datetime)
+
+**Wine Entity:**
+- id (uuid)
+- name (string)
+- producer (string)
+- vintage (integer)
+- color (enum)
+- quantity (integer)
+- cellar_id (uuid, foreign key)
+- created_at (datetime)
+- updated_at (datetime)
+
+#### API Endpoints Details:
+
+**Cellars Endpoints:**
+
+1. CREATE CELLAR
+```
+POST /cellars
+Request:
+{
+    "name": "string",
+    "description": "string"
+}
+Response: 201 Created
+{
+    "data": {
+        "id": "uuid",
+        "name": "string",
+        "description": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+2. READ CELLARS
+```
+GET /cellars
+Response: 200 OK
+{
+    "data": [
+        {
+            "id": "uuid",
+            "name": "string",
+            "description": "string",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }
+    ],
+    "meta": {
+        "total": "integer",
+        "page": "integer",
+        "per_page": "integer"
+    }
+}
+
+GET /cellars/{id}
+Response: 200 OK
+{
+    "data": {
+        "id": "uuid",
+        "name": "string",
+        "description": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+3. UPDATE CELLAR
+```
+PUT /cellars/{id}
+Request:
+{
+    "name": "string",
+    "description": "string"
+}
+Response: 200 OK
+
+PATCH /cellars/{id}
+Request:
+{
+    "name": "string"
+}
+Response: 200 OK
+```
+
+4. DELETE CELLAR
+```
+DELETE /cellars/{id}
+Response: 204 No Content
+```
+
+**Wines Endpoints:**
+
+1. CREATE WINE
+```
+POST /cellars/{cellar_id}/wines
+Request:
+{
+    "name": "string",
+    "producer": "string",
+    "vintage": "integer",
+    "color": "enum(red,white,rose,champagne,sparkling,fortified,dessert,orange)",
+    "quantity": "integer"
+}
+Response: 201 Created
+{
+    "data": {
+        "id": "uuid",
+        "name": "string",
+        "producer": "string",
+        "vintage": "integer",
+        "color": "string",
+        "quantity": "integer",
+        "cellar_id": "uuid",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+2. READ WINES
+```
+GET /cellars/{cellar_id}/wines
+Parameters:
+- page (integer)
+- per_page (integer)
+- vintage (integer)
+- producer (string)
+- name (string)
+- color (string)
+
+Response: 200 OK
+{
+    "data": [
+        {
+            "id": "uuid",
+            "name": "string",
+            "producer": "string",
+            "vintage": "integer",
+            "color": "string",
+            "quantity": "integer",
+            "cellar_id": "uuid",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }
+    ],
+    "meta": {
+        "total": "integer",
+        "page": "integer",
+        "per_page": "integer"
+    }
+}
+
+GET /cellars/{cellar_id}/wines/{id}
+Response: 200 OK
+{
+    "data": {
+        "id": "uuid",
+        "name": "string",
+        "producer": "string",
+        "vintage": "integer",
+        "color": "string",
+        "quantity": "integer",
+        "cellar_id": "uuid",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+3. UPDATE WINE
+```
+PUT /cellars/{cellar_id}/wines/{id}
+Request:
+{
+    "name": "string",
+    "producer": "string",
+    "vintage": "integer",
+    "color": "string",
+    "quantity": "integer"
+}
+Response: 200 OK
+
+PATCH /cellars/{cellar_id}/wines/{id}
+Request:
+{
+    "quantity": "integer"
+}
+Response: 200 OK
+```
+
+4. DELETE WINE
+```
+DELETE /cellars/{cellar_id}/wines/{id}
+Response: 204 No Content
+```
 
 ### Architecture:
 - Backend: PHP Symfony framework
@@ -100,76 +324,36 @@ An open-source, self-hosted Wine Cellar Management application with a mobile-fir
 - Must be self-hostable
 - Docker-based deployment
 - Mobile-first responsive design
-- 2D visualization for cellar layout
 - Offline-first capability for mobile usage
 - Secure authentication and data privacy
 - Image optimization for wine labels
 
 ## Scope Definition (Flexible)
 
-## Scope Statement:
-
-### Included in Scope:
-1. Core Wine Management Features:
-   - Complete CRUD operations for wine entries
-   - Detailed wine information management
-   - Image upload and storage for wine labels
-   - Location tracking within cellar
-
-2. Cellar Organization:
-   - 2D visualization of cellar layout
-   - Multiple cellar support
-   - Location management system
-
-3. Analytics Features:
-   - Collection value calculations
-   - Drinking window analysis
-   - Collection statistics and reports
-
-4. User Features:
-   - User authentication and authorization
-   - Personal tasting notes and ratings
-   - Data export capabilities
-
-5. Deployment:
-   - Docker containerization
-   - Installation documentation
-   - Basic monitoring and logging
-
-### Excluded from Scope:
-- Smart sensor integration
-- 3D cellar visualization
-- Automatic wine recognition
-- Direct wine marketplace integration
-- Mobile native applications (focusing on responsive web)
-- Social media platform integration
-- Temperature/humidity monitoring
-- External APIs integration (in initial phase)
-
-# Roadmap and Planning (Interactive)
-
-## Project Milestones:
-
 ### Phase 1 - Foundation (MVP)
 - Basic project setup with Symfony and Docker infrastructure
-- Core database design
+- Core database design with two main entities:
+  - Cellar (id, name, description, timestamps)
+  - Wine (id, name, producer, vintage, color, quantity, cellar_id, timestamps)
 - User authentication system
-- Basic wine CRUD operations
-- Initial API endpoints
-- Simple cellar location management
+- RESTful API endpoints:
+  - Cellars CRUD (/api/v1/cellars/*)
+  - Wines CRUD (/api/v1/cellars/{cellar_id}/wines/*)
+- Response format standardization with pagination
+- Initial API documentation
 
 ### Phase 2 - Core Features
 - Complete wine inventory management
-- 2D cellar visualization
-- Basic analytics implementation
+- Advanced analytics implementation
 - Frontend responsive implementation
 - API documentation
+- User management
+- Export/Import functionality
 
 ### Phase 3 - Enhanced Features
 - Advanced analytics and reporting
 - Collection value tracking
 - Drinking window management
-- Export/Import functionality
 - Performance optimization
 
 ### Phase 4 - Community and Polish
