@@ -145,7 +145,10 @@ jobs:
         run: composer audit --no-dev --format summary --locked --ansi
 
       - name: Run Composer Outdated
-        run: composer outdated -D --strict --ignore=phpunit/phpunit --ignore=phpstan/phpdoc-parser --ansi
+        run: composer outdated --direct --strict --ignore=phpunit/phpunit --ignore=phpstan/phpdoc-parser --ansi
+
+      - name: Run Importmap outdated
+        run: php bin/console importmap:outdated --quiet --no-interaction --ansi
 
   quality:
     name: Code Quality Checks
