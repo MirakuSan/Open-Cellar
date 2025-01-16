@@ -16,11 +16,17 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
+    '@symfony/ux-vue' => [
+        'path' => './vendor/symfony/ux-vue/assets/dist/loader.js',
+    ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
     ],
     'vue' => [
         'version' => '3.5.13',
@@ -44,10 +50,7 @@ return [
     '@vue/reactivity' => [
         'version' => '3.5.13',
     ],
-    '@symfony/ux-vue' => [
-        'path' => './vendor/symfony/ux-vue/assets/dist/loader.js',
-    ],
-    '@symfony/ux-live-component' => [
-        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    'tailwind' => [
+        'version' => '4.0.0',
     ],
 ];

@@ -131,7 +131,8 @@ db-reset: db-create db-update ## Reset the database
 ##
 ## —— ⚙️ Assets —————————————————————————————————————————————————————————————————————
 importmap-req: ## Add a new entry to the importmap.php file
-	@$(SYMFONY) importmap:require
+	@$(eval c ?=)
+	@$(SYMFONY) importmap:require $(c)
 
 typescript-build: ## Build the Typescript application
 	@$(SYMFONY) typescript:build

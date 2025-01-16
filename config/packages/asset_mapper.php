@@ -12,6 +12,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'paths' => [
                     'assets/',
                 ],
+                'missing_import_mode' => 'warn',
             ],
         ]
     );
