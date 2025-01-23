@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "165e5641cc3ee50f2535eff8471aa0f6",
+    "content-hash": "fc70d8d0ac0ce497b2b65e445ff6876d",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -7869,16 +7869,16 @@
         },
         {
             "name": "symfonycasts/tailwind-bundle",
-            "version": "v0.6.1",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/tailwind-bundle.git",
-                "reference": "28db7cfe23758cffc79f25a7c75cdb2fca52e9d9"
+                "reference": "81c9e6ff2bb1a95e67fc6af04ca87fccdcf55aa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/tailwind-bundle/zipball/28db7cfe23758cffc79f25a7c75cdb2fca52e9d9",
-                "reference": "28db7cfe23758cffc79f25a7c75cdb2fca52e9d9",
+                "url": "https://api.github.com/repos/SymfonyCasts/tailwind-bundle/zipball/81c9e6ff2bb1a95e67fc6af04ca87fccdcf55aa4",
+                "reference": "81c9e6ff2bb1a95e67fc6af04ca87fccdcf55aa4",
                 "shasum": ""
             },
             "require": {
@@ -7918,9 +7918,9 @@
             ],
             "support": {
                 "issues": "https://github.com/SymfonyCasts/tailwind-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/tailwind-bundle/tree/v0.6.1"
+                "source": "https://github.com/SymfonyCasts/tailwind-bundle/tree/v0.7.1"
             },
-            "time": "2024-11-06T18:41:22+00:00"
+            "time": "2025-01-23T14:54:07+00:00"
         },
         {
             "name": "twig/twig",
@@ -9611,16 +9611,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cd6e973e04b4c2b94c86e8612b5a65f0da0e08e7"
+                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cd6e973e04b4c2b94c86e8612b5a65f0da0e08e7",
-                "reference": "cd6e973e04b4c2b94c86e8612b5a65f0da0e08e7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7d08f569e582ade182a375c366cbd896eccadd3a",
+                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a",
                 "shasum": ""
             },
             "require": {
@@ -9665,7 +9665,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-05T16:43:48+00:00"
+            "time": "2025-01-21T14:54:06+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
