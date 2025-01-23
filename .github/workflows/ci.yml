@@ -83,10 +83,10 @@ jobs:
         run: echo "127.0.0.1 localhost" | sudo tee -a /etc/hosts
 
       - name: Check HTTP reachability
-        run: curl -v --fail-with-body http://localhost
+        run: curl -v --fail-with-body http://localhost/api/v0
 
       - name: Check HTTPS reachability
-        run: curl -vk --fail-with-body https://localhost
+        run: curl -vk --fail-with-body https://localhost/api/v0
 
       - name: Create test database
         run: make db-create
