@@ -23,7 +23,7 @@ RESET  := $(shell tput -Txterm sgr0)
 # Misc
 .DEFAULT_GOAL = help
 .PHONY        : help build rebuild up start kill down logs sh composer vendor sf cc test open ps db-create db-update db-reset
-.PHONY		  : php-cs-fixer php-cs-fixer-apply phpstan phpsalm phparkitect deptrac qa
+.PHONY		  : php-cs-fixer php-cs-fixer-apply phpstan phparkitect deptrac qa
 
 ## —— 🔥 Project ——
 .env.local: .env
@@ -92,8 +92,8 @@ ps:
 
 
 open: ## Open the project in the browser
-	@echo "${GREEN}Opening https://$(SERVER_NAME)"
-	@open https://$(SERVER_NAME)
+	@echo "${GREEN}Opening https://$(SERVER_NAME)/api/v0"
+	@open https://$(SERVER_NAME)/api/v0
 
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
@@ -152,7 +152,7 @@ tailwind-prod: ## Install tailwindcss in production
 ##
 ## —— ✨ Code Quality ——————————————————————————————————————————————————————————
 qa: ## Run all code quality tools
-qa: php-cs-fixer phpstan psalm phparkitect
+qa: php-cs-fixer phpstan phparkitect
 
 php-cs-fixer: ## PhpCsFixer (https://cs.symfony.com/)
 	@$(PHP_CONT) vendor/bin/php-cs-fixer fix --using-cache=no --verbose --diff --dry-run --ansi
@@ -162,9 +162,6 @@ php-cs-fixer-apply: ## Applies PhpCsFixer fixes
 
 phpstan: ## Run phpstan static analysis
 	@$(PHP_CONT) vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=-1 --ansi
-
-psalm: ## Run psalm static analysis
-	@$(PHP_CONT) vendor/bin/psalm --show-info=true
 
 phparkitect: ## Run phparkitect static analysis
 	@$(PHP_CONT) vendor/bin/phparkitect check --config=phparkitect.php --ansi

@@ -19,12 +19,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'naming_strategy' => 'doctrine.orm.naming_strategy.underscore_number_aware',
             'auto_mapping' => true,
             'mappings' => [
-                'App' => [
-                    'type' => 'attribute',
+                'Cellar' => [
                     'is_bundle' => false,
-                    'dir' => '%kernel.project_dir%/src/Entity',
-                    'prefix' => 'App\Entity',
-                    'alias' => 'App',
+                    'type' => 'attribute',
+                    'dir' => '%kernel.project_dir%/src/Cellar/Domain',
+                    'prefix' => 'App\Cellar\Domain',
+                ],
+                'Shared' => [
+                    'is_bundle' => false,
+                    'type' => 'attribute',
+                    'dir' => '%kernel.project_dir%/src/Shared/Domain',
+                    'prefix' => 'App\Shared\Domain',
                 ],
             ],
             'controller_resolver' => [
