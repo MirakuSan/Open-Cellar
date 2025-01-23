@@ -3,18 +3,19 @@
 declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('security', [
         'password_hashers' => [
-            'Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface' => 'auto',
+            PasswordAuthenticatedUserInterface::class => 'auto',
         ],
         'providers' => [
             'users_in_memory' => ['memory' => null],
         ],
         'firewalls' => [
             'dev' => [
-                'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
+                'pattern' => '^/(_(profiler|wdt)|css|images|js|ts)/',
                 'security' => false,
             ],
             'main' => [
@@ -28,7 +29,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('security', [
             'password_hashers' => [
-                'Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface' => [
+                PasswordAuthenticatedUserInterface::class => [
                     'algorithm' => 'auto',
                     'cost' => 4,
                     'time_cost' => 3,

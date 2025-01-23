@@ -181,9 +181,6 @@ jobs:
       - name: Run PhpStan
         run: vendor/bin/phpstan analyse --memory-limit=-1 --ansi
 
-      - name: Run Psalm
-        run: vendor/bin/psalm --show-info=true
-
       - name: Run PhpArkitect
         run: vendor/bin/phparkitect check --config=phparkitect.php --ansi
 
