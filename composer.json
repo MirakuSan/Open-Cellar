@@ -42,13 +42,13 @@
         "symfony/ux-vue": "^2.22",
         "symfony/validator": "^7.2",
         "symfony/yaml": "^7.2",
-        "symfonycasts/tailwind-bundle": "^0.8"
+        "symfonycasts/tailwind-bundle": "^0.9"
     }
     ,
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.57",
         "justinrainbow/json-schema": "^6.0",
-        "phparkitect/phparkitect": "^0.4.0",
+        "phparkitect/phparkitect": "^0.5.2",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.5",
         "symfony/browser-kit": "^7.2",
